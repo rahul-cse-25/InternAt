@@ -3,13 +3,16 @@ import java.util.Scanner;
 public class StudentGradeCalculator {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		String[] subjects = { "Computer Network", "Engineering Maths", "Data Structure", "Operating System",
-				"Java Programming" };
 		System.out.println("\n------------------------------------");
 		System.out.println("***** Student Grade Calculator *****");
 		System.out.println("------------------------------------");
 		System.out.println(
 				"This is the Grade Calculor along \nwith some other feature you have to \njust enter the marks of subjects");
+		System.out.println("------------------------------------");
+		System.out.print("Enter no. of Subjects:\t");
+		int n = sc.nextInt();
+		sc.nextLine();
+		String[] subjects = getSubjectsMarks(sc, n);
 		System.out.println("------------------------------------");
 		int[] marks = getMarks(sc, subjects);
 		int totalMarks = getTotalMarks(marks);
@@ -19,6 +22,15 @@ public class StudentGradeCalculator {
 		System.out.println("      *** Program Ended ! ***");
 		System.out.println("------------------------------------");
 		sc.close();
+	}
+
+	private static String[] getSubjectsMarks(Scanner sc, int n) {
+		String[] sub = new String[n];
+		for (int i = 0; i < n; i++) {
+			System.out.print("Enter the "+(i+1) +" Subject's Name:\t");
+			sub[i] = sc.nextLine();
+		}
+		return sub;
 	}
 
 	private static void displayResult(String[] subjects, int[] marks, int totalMarks, float averagePercent,

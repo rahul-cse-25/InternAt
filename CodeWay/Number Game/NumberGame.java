@@ -1,8 +1,6 @@
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-// check
-
 public class NumberGame {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -24,6 +22,7 @@ public class NumberGame {
 			int count = 5;
 			int randomNum = generateRandomNumber();
 			for (int i = 0; i < 5; i++) {
+				System.out.println("---------------------------------------");
 				System.out.println("You have " + count + " attempt left !");
 				int userNum = getIntInput(sc, "Enter your guessed number:\t");
 				if (randomNum == userNum) {
@@ -32,7 +31,7 @@ public class NumberGame {
 				} else {
 					count--;
 					wrongGuessPrompt();
-					suggestNumber(randomNum, userNum, count);
+					System.out.println(suggestNumber(randomNum, userNum, count));
 					if (count == 0)
 						gameEndPrompt();
 				}
@@ -50,16 +49,19 @@ public class NumberGame {
 		System.exit(0);
 	}
 
-	private static void suggestNumber(int randomNum, int userNum, int count) {
+	private static String suggestNumber(int randomNum, int userNum, int count) {
 		if (count != 0) {
-			if (Math.abs(randomNum - userNum) < 5) {
-				System.out.println("So close to the number...");
-				System.out.println("---------------------------------------");
-			} else if (Math.abs(randomNum - userNum) > 10) {
-				System.out.println("So far with number...");
-				System.out.println("---------------------------------------");
+			if(randomNum > userNum && randomNum - userNum < 5) {
+				return "So close and small Number";
+			}else if(randomNum > userNum && randomNum - userNum > 10) {
+				return "So close and small Number";
+			}else if(randomNum < userNum && userNum - randomNum < 5) {
+				return "So close and big Number";
+			}else if(randomNum < userNum && userNum - randomNum > 10) {
+				return "So far and big Number";
 			}
 		}
+		return null;
 	}
 
 	private static int getIntInput(Scanner sc, String prompt) {

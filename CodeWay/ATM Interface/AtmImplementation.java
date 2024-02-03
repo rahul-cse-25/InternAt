@@ -18,14 +18,15 @@ public class AtmImplementation {
 					System.out.println("\n------------------------------");
 					System.out.println("******* ATM Simulation *******");
 					System.out.println("------------------------------");
-					System.out.println("1.Check Balance\n2.WithDraw\n3.Deposit\nEnter -1 to Exit");
+					System.out.println("1.Check Balance\n2.WithDraw\n3.Deposit\n4.Transaction History\nEnter -1 to Exit");
 					System.out.println("------------------------------");
 					int choice = getIntInput(sc, "Enter your choice:\t");
 					switch (choice) {
 					case 1: {
 						int pin = getIntInput(sc, "Enter Pin code:\t");
 						atm.setPinNum(pin);
-						System.out.println(atm.balance());
+						System.out.println("Available balance: " + atm.balance());
+						
 						break;
 					}
 					case 2: {
@@ -42,6 +43,12 @@ public class AtmImplementation {
 						atm.setPinNum(pin);
 						atm.deposit(amount);
 						break;
+					}
+					case 4:{
+						System.out.print("Enter Card Number:\t");
+						int cardVal = sc.nextInt();
+						sc.nextLine();
+						atm.passbookStatement(cardVal);
 					}
 					case -1: {
 						System.out.println("------------------------------");
@@ -60,7 +67,7 @@ public class AtmImplementation {
 				}
 			} else {
 				System.out.println("User Not Exist.");
-				int choice = getIntInput(sc, "Press 1 to Try Again or Press any other key to end the program:\t");
+				int choice = getIntInput(sc, "Press 1 to Try Again or Press any other number to end the program:\t");
 				if (choice != 1) {
 					System.out.println("------------------------------");
 					System.out.println("Program Ended ! Thank You Visit Again !!");

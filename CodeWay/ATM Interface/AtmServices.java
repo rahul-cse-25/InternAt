@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.List;
 
 public class AtmServices implements ATM {
 
@@ -42,6 +43,7 @@ public class AtmServices implements ATM {
 				if (customer.getAtmCardNum() == getCardNum() && customer.getBalance() >= amount) {
 					if (customer.getAtmPinNum() == getPinNum()) {
 						customer.setBalance(customer.getBalance() - amount);
+						customer.addTransaction(amount, "Rupees withdraw");
 						System.out.println("WithDraw Successful !!");
 						System.out.println("Available balance: " + customer.getBalance());
 						break;
@@ -64,6 +66,7 @@ public class AtmServices implements ATM {
 			for (UserBankAccount customer : user) {
 				if (customer.getAtmCardNum() == getCardNum() && customer.getAtmPinNum() == getPinNum()) {
 					customer.setBalance(customer.getBalance() + amount);
+					customer.addTransaction(amount, "Rupees Credited");
 					System.out.println("Deposited Successful !!");
 					System.out.println("Available balance: " + customer.getBalance());
 					break;
@@ -92,6 +95,30 @@ public class AtmServices implements ATM {
 		return 0;
 	}
 
+	public void passbookStatement(int cardNum) {
+		for (UserBankAccount ctm : user) {
+			if (ctm.getAtmCardNum() == cardNum) {
+				List<UserBankAccount.Transaction> transactions = ctm.getStatement();
+				int size = transactions.size();
+
+				System.out.println("Last 10 Transactions for Card Number: " + cardNum);
+				if(size == 0) {
+					System.out.println("No Transaction found !");
+					return;
+				}
+				int startIndex = Math.max(0, size - 10); // Start index to ensure at most 10 transactions are printed
+				for (int i = startIndex; i < size; i++) {
+					UserBankAccount.Transaction transaction = transactions.get(i);
+					System.out.println("--> " + transaction.getAmount() + " " + transaction.getDescription()
+							+ " ,Balance: " + transaction.getBalance());
+				}
+				return;
+			}
+		}
+		System.out.println("Account Not found !");
+	}
+	
+	
 	public boolean isPresent(int cardNum) {
 		for (UserBankAccount customer : user) {
 			if (customer.getAtmCardNum() == cardNum)
